@@ -106,6 +106,7 @@ scripts/       # runnable scripts
 data/          # Resume dataset
 tests/         # Test suite
 assets/        # architecture + documentation images
+sample_inputs/ # sample job descriptions for testing
 ```
 
 ## Dataset Used
