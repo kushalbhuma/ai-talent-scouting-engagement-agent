@@ -57,12 +57,23 @@ The diagram below represents the full recruiter-to-shortlist execution flow used
 
 - Frontend: Streamlit
 - Backend: FastAPI
-- LLM: Gemini 2.5 Flash
+- LLM: Gemini 2.5 Flash (structured reasoning + evaluation)
 - Embeddings: Gemini Embeddings
 - Retrieval: Azure AI Search
 - Database: SQLite
 - Validation: Pydantic
 - Logging: Python logging
+
+## Live Deployment
+
+Frontend (Recruiter UI):  
+https://talent-scouting-ui.onrender.com
+
+Backend API Docs:  
+https://talent-scouting-api.onrender.com/docs
+
+Note:
+This deployment runs on free-tier infrastructure and may occasionally experience cold starts or provider rate limits.
 
 ## Retrieval Layer
 
