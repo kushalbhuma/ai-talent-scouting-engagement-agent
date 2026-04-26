@@ -8,7 +8,7 @@ from pydantic import BaseModel
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 ENV_FILE = PROJECT_ROOT / ".env"
 
-
+# Note: We avoid using python-dotenv to reduce dependencies and have more control over env loading behavior. This function will load environment variables from a .env file if it exists, without overriding existing environment variables.
 def _load_dotenv() -> None:
     if not ENV_FILE.exists():
         return
@@ -22,14 +22,14 @@ def _load_dotenv() -> None:
         value = value.strip().strip('"').strip("'")
         os.environ.setdefault(key, value)
 
-
+# Utility function to resolve paths relative to the project root. This allows users to specify either absolute paths or paths relative to the project root in environment variables.
 def _resolve_project_path(value: str) -> str:
     path = Path(value)
     if path.is_absolute():
         return str(path)
     return str((PROJECT_ROOT / path).resolve())
 
-
+#  Settings class using Pydantic for validation and type enforcement. This class defines all the configuration options for the application, with default values and types. The get_settings function loads the environment variables and returns a Settings instance, caching it for future use.
 class Settings(BaseModel):
     app_name: str = "Talent Scouting & Engagement Agent"
     environment: str = "development"
@@ -54,7 +54,7 @@ class Settings(BaseModel):
     azure_ai_search_vector_field: str = "resume_embedding"
     azure_ai_search_force_reindex: bool = False
 
-
+# The get_settings function is decorated with lru_cache to ensure that the settings are loaded and parsed only once, improving performance by avoiding redundant work on subsequent calls.
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
     _load_dotenv()

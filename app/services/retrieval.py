@@ -14,7 +14,7 @@ TECHNICAL_ROLE_TERMS = {
     "platform",
 }
 
-
+# The CandidateRetriever class implements the retrieval logic for finding relevant candidates based on a parsed job description. 
 class CandidateRetriever:
     def retrieve(
         self,

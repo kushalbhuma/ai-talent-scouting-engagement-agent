@@ -33,7 +33,7 @@ from app.services.storage import ResultStore
 
 logger = logging.getLogger(__name__)
 
-
+# The RecruiterPipeline class orchestrates the entire candidate shortlisting process, including parsing the job description, retrieving relevant candidates, evaluating them, and storing the results. 
 class RecruiterPipeline:
     def __init__(self) -> None:
         settings = get_settings()

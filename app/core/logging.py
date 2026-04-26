@@ -4,7 +4,7 @@ from pathlib import Path
 
 from app.core.config import get_settings
 
-
+# This module sets up logging for the application, configuring both file and console logging with a consistent format. 
 def configure_logging() -> None:
     settings = get_settings()
     logs_dir = Path(settings.logs_dir)

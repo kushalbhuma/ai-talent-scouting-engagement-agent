@@ -5,7 +5,6 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-
 RecommendationLabel = Literal[
     "Strong Immediate Fit",
     "High Match, Moderate Interest",
@@ -15,15 +14,15 @@ RecommendationLabel = Literal[
     "Moderate Fit",
 ]
 
-
+# This module defines all the Pydantic models (schemas) used for request and response validation in the API routes.
 class HealthResponse(BaseModel):
     status: str
 
-
+# The JobDescriptionInput model represents the raw job description text input from the user, with validation to ensure a minimum length.
 class JobDescriptionInput(BaseModel):
     text: str = Field(min_length=20, description="Raw job description text")
 
-
+# The ParsedJobDescription model represents the structured information extracted from the raw job description, including role, skills, experience, domain, seniority, location preference, and job type.
 class ParsedJobDescription(BaseModel):
     role: str = ""
     must_have_skills: list[str] = Field(default_factory=list)
@@ -34,7 +33,7 @@ class ParsedJobDescription(BaseModel):
     location_preference: str = ""
     job_type: str = ""
 
-
+# The CandidateRecord model represents the information about a candidate retrieved from the dataset, including their resume text, inferred skills, experience, seniority, role hints, and domain.
 class CandidateRecord(BaseModel):
     candidate_id: str
     resume_text: str
@@ -46,18 +45,18 @@ class CandidateRecord(BaseModel):
     inferred_role_hint: str = ""
     inferred_domain: str = ""
 
-
+# The CandidatePersona model represents a summary of the candidate's persona based on their resume and other information, including a summary and supporting evidence.
 class CandidatePersona(BaseModel):
     summary: str
     evidence: list[str] = Field(default_factory=list)
 
-
+# The RetrievalResult model represents the result of the retrieval step for a candidate, including the candidate record, retrieval score, and matched terms from the job description.
 class RetrievalResult(BaseModel):
     candidate: CandidateRecord
     retrieval_score: float
     matched_terms: list[str] = Field(default_factory=list)
 
-
+# The EvaluationResult model represents the result of the evaluation step for a candidate, including their match score, interest score, final recommendation, reasoning, risk flags, and a breakdown of different scoring factors.
 class ScoreBreakdown(BaseModel):
     skills_match: float
     experience_match: float
@@ -71,7 +70,7 @@ class ScoreBreakdown(BaseModel):
     seniority_fit: float
     domain_preference: float
 
-
+# The EvaluationResult model represents the result of the evaluation step for a candidate, including their match score, interest score, final recommendation, reasoning, risk flags, and a breakdown of different scoring factors.
 class EvaluationResult(BaseModel):
     candidate_id: str
     candidate_category: str
@@ -90,7 +89,7 @@ class EvaluationResult(BaseModel):
     retrieval_score: float
     score_breakdown: ScoreBreakdown
 
-
+# The ShortlistResult model represents the overall result of the shortlist creation process, including the request ID, creation timestamp, parsed job description, list of evaluated candidates, and metadata about the retrieval and evaluation process.
 class ShortlistResult(BaseModel):
     request_id: str
     created_at: datetime

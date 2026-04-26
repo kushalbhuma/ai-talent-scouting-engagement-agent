@@ -103,7 +103,8 @@ EVALUATION_SCHEMA: dict[str, Any] = {
     ],
 }
 
-
+# The GeminiClient class provides methods to interact with the Gemini API for parsing job descriptions, generating embeddings, and evaluating candidates. 
+# It constructs prompts based on the job description and candidate information, sends requests to the Gemini API, and processes the responses to produce structured evaluation results.
 class GeminiClient:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings

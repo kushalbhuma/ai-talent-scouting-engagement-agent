@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 def healthcheck() -> HealthResponse:
     return HealthResponse(status="ok")
 
-
+# The create_shortlist endpoint is the main entry point for creating a candidate shortlist based on a provided job description. 
 @router.post("/api/v1/shortlist", response_model=ShortlistResult)
 async def create_shortlist(
     payload: ShortlistRequest,
