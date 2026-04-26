@@ -1,5 +1,13 @@
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(ROOT_DIR))
+
+from app.core.config import get_settings
+
 import os
 from tempfile import NamedTemporaryFile
 
@@ -8,7 +16,6 @@ import pandas as pd
 import streamlit as st
 import logging
 
-from app.core.config import get_settings
 from app.services.api_client import BackendApiClient
 from app.services.document_parser import DocumentParser
 
