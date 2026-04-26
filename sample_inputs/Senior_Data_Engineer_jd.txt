@@ -1,0 +1,43 @@
+Job Title: Senior Data Engineer
+
+Location: Remote / Hybrid
+Employment Type: Full-Time
+Experience Required: 5–10 Years
+
+Job Summary
+
+We are looking for a Senior Data Engineer to build and maintain scalable data infrastructure supporting analytics, reporting, and business intelligence initiatives. The candidate should have strong cloud engineering skills and experience designing modern ETL workflows.
+
+Responsibilities
+
+- Build scalable ETL and ELT data pipelines
+- Design cloud-native data architecture
+- Develop data ingestion frameworks
+- Optimize SQL queries and warehouse performance
+- Maintain Azure-based data workflows
+- Collaborate with analytics and engineering teams
+- Ensure data quality, governance, and reliability
+- Support dashboarding and reporting requirements
+
+Required Skills
+
+- Python
+- SQL
+- Azure Data Factory
+- Data Warehousing
+- ETL pipelines
+- API integration
+- Cloud engineering
+- Data modeling
+- Spark or PySpark
+
+Preferred Qualifications
+
+- Experience with Azure Synapse
+- CI/CD pipeline integration
+- Data governance practices
+- Distributed systems knowledge
+
+Domain
+
+Data Engineering, Cloud Infrastructure

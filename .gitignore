@@ -13,6 +13,7 @@ logs/*.log
 *.err.log
 data/*.csv
 !data/.gitkeep
+!data/Resume_clean.csv
 *.sqlite3
 *.db
 *.csv.tmp

@@ -50,6 +50,7 @@ It focuses on:
 ### System Architecture
 
 The diagram below represents the full recruiter-to-shortlist execution flow used by the system.
+
 ![Architecture Diagram](assets/architecture.png)
 
 ## Technology Stack
@@ -167,12 +168,52 @@ Google Colab preprocessing notebook:
 
 You may also experiment with different datasets or randomly sampled resume subsets for testing, provided the schema remains compatible with the pipeline structure.
 
+## Included Evaluation Dataset
+
+This repository includes a cleaned evaluation dataset used during development and testing.
+
+Dataset file:
+
+```text
+data/Resume_clean.csv
+```
+
+The dataset contains 48 curated resumes sampled across multiple categories to support reproducible shortlist generation and evaluation.
+
+Schema:
+
+- `ID`
+- `Resume_str`
+- `Category`
+
+Users may replace this dataset with larger or custom datasets as long as schema compatibility is preserved.
+
 ## Quick start
 
-1. Create `.env` from `.env.example`.
-2. Add your dataset at `data/Resume.csv`, or point `RESUME_DATA_PATH` to your CSV in `.env`.
-3. Create a virtual environment.
-4. Install dependencies:
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/kushalbhuma/ai-talent-scouting-engagement-agent.git
+cd ai-talent-scouting-engagement-agent
+```
+
+### 2. Create Virtual Environment
+
+Windows:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+Mac/Linux:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -184,12 +225,16 @@ Windows shortcut:
 .\scripts\setup.ps1
 ```
 
-Expected dataset columns:
+### 4. Configure Environment Variables
 
-- `ID` or `candidate_id`
-- `Resume_str` or `resume_text`
-- `Category` or `category`
-- optional: `Resume_html` or `resume_html`
+Create a `.env` file using `.env.example`.
+
+Required configuration includes:
+
+- Gemini API key
+- Azure AI Search endpoint and key
+- dataset path
+- backend/frontend ports
 
 Recommended `.env` values:
 
@@ -215,18 +260,66 @@ STREAMLIT_PORT=8510
 BACKEND_API_URL=http://127.0.0.1:8010
 ```
 
-Start both services:
+### 5. Add Resume Dataset
+
+Place your dataset inside:
+
+```text
+data/Resume.csv
+```
+
+Or configure a custom dataset path inside `.env`:
+
+```text
+RESUME_DATA_PATH=your_dataset.csv
+```
+
+Expected dataset columns:
+
+- `ID` or `candidate_id`
+- `Resume_str` or `resume_text`
+- `Category` or `category`
+- optional: `Resume_html` or `resume_html`
+
+### 6. Start Backend API
+
+```powershell
+.\scripts\start_api.ps1
+```
+
+Backend runs at:
+
+```text
+http://127.0.0.1:8010
+```
+
+### 7. Start Streamlit Frontend
+
+```powershell
+.\scripts\start_ui.ps1
+```
+
+Frontend runs at:
+
+```text
+http://127.0.0.1:8510
+```
+
+### 8. Run Complete System
+
+You may also launch both services together:
 
 ```powershell
 .\scripts\start_all.ps1
 ```
 
-Or run them individually:
+### 9. Generate Shortlist
 
-```powershell
-.\scripts\start_api.ps1
-.\scripts\start_ui.ps1
-```
+1. Open Streamlit dashboard
+2. Paste or upload Job Description
+3. Sync Search Index
+4. Click Generate Shortlist
+5. Review ranked candidates with explainable scoring
 
 ## API endpoints
 
@@ -280,6 +373,34 @@ This fingerprint improves retrieval quality and structured evaluation consistenc
 - 20% Career Transition Plausibility
 - 15% Seniority Fit
 - 10% Domain Preference
+
+## Scoring Logic Overview
+
+Candidate evaluation is implemented through a weighted scoring engine inside `app/services/evaluator.py`.
+
+After semantic retrieval, each candidate is evaluated using two primary scores:
+
+- Match Score → measures how closely a candidate fits the Job Description
+- Interest Likelihood Score → estimates how likely a candidate may engage with the opportunity
+
+### Final Scoring Formulas
+
+```text
+Match Score =
+(0.35 × Skills Match)
++ (0.25 × Experience Match)
++ (0.15 × Role Similarity)
++ (0.10 × Domain Match)
++ (0.10 × Resume Quality)
++ (0.05 × Category Match)
+
+Interest Likelihood Score =
+(0.35 × Career Alignment)
++ (0.20 × Skill Continuity)
++ (0.20 × Transition Plausibility)
++ (0.15 × Seniority Fit)
++ (0.10 × Domain Preference)
+```
 
 ## Candidate Evaluation Output
 
